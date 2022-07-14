@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    int hitCount= 9;
+    int hitCount;
     MeshRenderer mesh;
     public Material[] colors = new Material[9];
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         mesh = GetComponent<MeshRenderer>();
     }
     private void OnEnable()
     {
         hitCount = GameManager.instance.stage;
+        mesh.material = colors[(hitCount - 1) % 9];
     }
 
     // Update is called once per frame
@@ -22,13 +23,17 @@ public class Block : MonoBehaviour
     {
         
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "BALL")
         {
-            hitCount--;            
-            if (hitCount <= 0) Break();
-            mesh.material = colors[hitCount - 1];
+            if (--hitCount == 0)
+            {
+                Break();
+                return;
+            }
+            mesh.material = colors[(hitCount - 1) % 9];
         }
     }
     private void Break()

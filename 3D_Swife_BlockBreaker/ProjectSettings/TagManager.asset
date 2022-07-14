@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SkyboxCamera
   - BALL
+  - BASE
   layers:
   - Default
   - TransparentFX
