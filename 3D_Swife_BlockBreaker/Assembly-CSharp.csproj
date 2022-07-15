@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Ball.cs" />
     <Compile Include="Assets\Scripts\Block.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\ObjPoolManager.cs" />
     <Compile Include="Assets\Scripts\Reflect.cs" />
   </ItemGroup>
   <ItemGroup>

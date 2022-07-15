@@ -4,7 +4,36 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    private bool isShoot = false;
     private Rigidbody rBody;
+    private Transform tr;
+    private float h;
+    private float v;
+    public float speed = 3.0f;
+    Ray ray;
+    RaycastHit hit;
+    void Start()
+    {
+        rBody = GetComponent<Rigidbody>();
+        tr = GetComponent<Transform>();
+        
+    }
+    void Update()
+    {
+        if (isShoot) return;
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue);
+        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxis("Vertical");
+        Vector3 position = tr.position;
+        position.x += h * speed * Time.deltaTime;
+        position.z += v * speed * Time.deltaTime;
+        tr.position = position;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "BASE")
@@ -13,18 +42,12 @@ public class Ball : MonoBehaviour
             GameManager.instance.NextStage();
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        rBody = GetComponent<Rigidbody>();
-        rBody.AddForce((Vector3.up+new Vector3(0.1f, 0, 0.4f)) * 300f);
-    }
-
-   
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Shoot()
+    {        
+        if (Physics.Raycast(ray, out hit, 1 << 8))
+        {
+            isShoot = true;
+            rBody.AddForce(hit.point * 100f);
+        }
     }
 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 9015132231679316969}
   - component: {fileID: 9015132231679316758}
   - component: {fileID: 9015132231679316759}
-  - component: {fileID: 9015132231679316756}
   - component: {fileID: 1558148310675400389}
   m_Layer: 0
   m_Name: Ball
@@ -90,7 +89,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9015132231679316757}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 498ecb8fab8e31844b4cec24306b71fe, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -106,24 +105,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!75 &9015132231679316756
-ConstantForce:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9015132231679316757}
-  m_Enabled: 1
-  m_Force: {x: 0, y: 5, z: 0}
-  m_RelativeForce: {x: 0, y: 0, z: 0}
-  m_Torque: {x: 0, y: 0, z: 0}
-  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!114 &1558148310675400389
 MonoBehaviour:
   m_ObjectHideFlags: 0

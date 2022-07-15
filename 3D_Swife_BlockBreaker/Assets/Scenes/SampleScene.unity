@@ -4573,6 +4573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439133641}
   - component: {fileID: 439133640}
+  - component: {fileID: 439133642}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4851,6 +4852,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &439133642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439133639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f426603989ad80449b11cfaec7961575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 9015132231679316757, guid: 620ccd3556697d34ab0b48ceee0b625d,
+    type: 3}
 --- !u!1 &439504718 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3494897048547381961, guid: f33da8f536e50cd4a9d8cabbb14567cc,
@@ -7376,7 +7391,7 @@ GameObject:
   - component: {fileID: 657228128}
   - component: {fileID: 657228127}
   - component: {fileID: 657228126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21946,25 +21961,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    - target: {fileID: 9015132231679316757, guid: 620ccd3556697d34ab0b48ceee0b625d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015132231679316757, guid: 620ccd3556697d34ab0b48ceee0b625d,
-        type: 3}
-      propertyPath: m_TagString
-      value: BALL
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015132231679316758, guid: 620ccd3556697d34ab0b48ceee0b625d,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 498ecb8fab8e31844b4cec24306b71fe,
-        type: 2}
     - target: {fileID: 9015132231679316759, guid: 620ccd3556697d34ab0b48ceee0b625d,
         type: 3}
-      propertyPath: m_AngularDrag
+      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9015132231679316971, guid: 620ccd3556697d34ab0b48ceee0b625d,
@@ -21980,7 +21979,7 @@ PrefabInstance:
     - target: {fileID: 9015132231679316971, guid: 620ccd3556697d34ab0b48ceee0b625d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.45
+      value: -1.85
       objectReference: {fileID: 0}
     - target: {fileID: 9015132231679316971, guid: 620ccd3556697d34ab0b48ceee0b625d,
         type: 3}
@@ -22022,6 +22021,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 9015132231679316756, guid: 620ccd3556697d34ab0b48ceee0b625d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 620ccd3556697d34ab0b48ceee0b625d, type: 3}
