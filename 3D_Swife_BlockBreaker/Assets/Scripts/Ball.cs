@@ -51,7 +51,7 @@ public class Ball : MonoBehaviour
         {
             GameManager.instance.currPoint = hit.point;
             isShoot = true;
-            rBody.AddForce(hit.point * 100f);
+            rBody.AddForce(hit.point.normalized * 1000f);
             currPos = tr.position;
             StartCoroutine(ShootingBall());
         }

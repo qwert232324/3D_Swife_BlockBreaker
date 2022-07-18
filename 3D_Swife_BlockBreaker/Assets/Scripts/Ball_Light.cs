@@ -11,7 +11,7 @@ public class Ball_Light : MonoBehaviour
     }
     private void OnEnable()
     {
-        rBody.AddForce(GameManager.instance.currPoint * 100f);
+        rBody.AddForce(GameManager.instance.currPoint.normalized * 1000f);
     }
     private void OnDisable()
     {        

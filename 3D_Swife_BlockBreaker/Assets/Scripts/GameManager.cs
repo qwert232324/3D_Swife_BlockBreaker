@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int stage = 1;
     public Vector3 currPoint;
     private int idx = 0;
+
     public GameObject ballPrefab;
     private List<GameObject> objPool = new List<GameObject>();
 
@@ -41,10 +42,7 @@ public class GameManager : MonoBehaviour
             floors[0].blocks[i].gameObject.SetActive(Random.value > 0.5f);
         }
     }
-    private void Update()
-    {
 
-    }
     public GameObject GetBall()
     {
         for (int i = 0; i < objPool.Count; i++)
