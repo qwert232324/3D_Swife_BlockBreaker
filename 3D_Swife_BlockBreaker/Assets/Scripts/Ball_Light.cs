@@ -23,6 +23,11 @@ public class Ball_Light : MonoBehaviour
         if (collision.gameObject.tag == "BASE")
         {
             this.gameObject.SetActive(false);
+            for (int i = 0; i < GameManager.instance.objPool.Count; i++)
+            {
+                if (GameManager.instance.objPool[i].activeInHierarchy) return;
+            }
+            GameManager.instance.NextStage();
         }
     }
 

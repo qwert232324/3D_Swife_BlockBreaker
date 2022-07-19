@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    private bool isShoot = false;
     private Rigidbody rBody;
     private Transform tr;
     private float h;
@@ -13,21 +12,34 @@ public class Ball : MonoBehaviour
     Vector3 currPos;
     Ray ray;
     RaycastHit hit;
+    LineRenderer line;
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
-        
+        line = GetComponent<LineRenderer>();
+        line.positionCount = 2;
     }
     void Update()
-    {       
-        if (isShoot) return;
+    {
+        line.SetPosition(0, tr.position);
+        for (int i = 0; i < GameManager.instance.objPool.Count; i++)
+        {
+            if (GameManager.instance.objPool[i].activeInHierarchy) return;
+        }
+
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue);
+
+        if (Physics.Raycast(ray, out hit, 1 << 8))
+        {
+            line.SetPosition(1, hit.point);
+        }
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
         }
+
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
         Vector3 position = tr.position;
@@ -40,9 +52,8 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.tag == "BASE")
         {
-            isShoot = false;
             rBody.Sleep();
-            GameManager.instance.NextStage();
+            if (GameManager.instance.stage == 1) GameManager.instance.NextStage();
         }
     }
     void Shoot()
@@ -50,16 +61,17 @@ public class Ball : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 1 << 8))
         {
             GameManager.instance.currPoint = hit.point;
-            isShoot = true;
             rBody.AddForce(hit.point.normalized * 1000f);
             currPos = tr.position;
+            line.enabled = false;
             StartCoroutine(ShootingBall());
+            line.enabled = true;
         }
         
     }
 
     IEnumerator ShootingBall()
-    {
+    {        
         for(int i = 1; i < GameManager.instance.stage; i++)
         {
             yield return new WaitForSeconds(0.1f);

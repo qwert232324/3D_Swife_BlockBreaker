@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private int idx = 0;
 
     public GameObject ballPrefab;
-    private List<GameObject> objPool = new List<GameObject>();
+    public List<GameObject> objPool = new List<GameObject>();
 
     void Awake()
     {

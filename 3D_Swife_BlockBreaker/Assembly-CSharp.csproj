@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\Ball_Light.cs" />
     <Compile Include="Assets\Scripts\Block.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\RotateCamera.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Images\Real Stars Skybox\Demo Scene\Documentation.txt" />
