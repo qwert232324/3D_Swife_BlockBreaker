@@ -11,7 +11,7 @@ public class Ball_Light : MonoBehaviour
     }
     private void OnEnable()
     {
-        rBody.AddForce(GameManager.instance.currPoint.normalized * 1000f);
+        rBody.velocity = GameManager.instance.currPoint * 10f;
     }
     private void OnDisable()
     {        
@@ -28,6 +28,7 @@ public class Ball_Light : MonoBehaviour
                 if (GameManager.instance.objPool[i].activeInHierarchy) return;
             }
             GameManager.instance.NextStage();
+            GameManager.instance.isShoot = false;
         }
     }
 

@@ -6,35 +6,26 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody rBody;
     private Transform tr;
+    GameObject arrow;
+    Vector3 currPos;
     private float h;
     private float v;
+    private float rotH;
+    private float rotV;
     public float speed = 3.0f;
-    Vector3 currPos;
-    Ray ray;
-    RaycastHit hit;
-    LineRenderer line;
+    public float rotSpeed = 100f;
     void Start()
     {
+        arrow = this.gameObject.transform.GetChild(0).gameObject;
         rBody = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
-        line = GetComponent<LineRenderer>();
-        line.positionCount = 2;
     }
     void Update()
     {
-        line.SetPosition(0, tr.position);
-        for (int i = 0; i < GameManager.instance.objPool.Count; i++)
-        {
-            if (GameManager.instance.objPool[i].activeInHierarchy) return;
-        }
+        if (GameManager.instance.isShoot) return;
 
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        arrow.SetActive(true);
 
-        if (Physics.Raycast(ray, out hit, 1 << 8))
-        {
-            line.SetPosition(1, hit.point);
-        }
-        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
@@ -42,10 +33,14 @@ public class Ball : MonoBehaviour
 
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
+        rotH = Input.GetAxis("RotLR");
+        rotV = Input.GetAxis("RotUD");
         Vector3 position = tr.position;
         position.x += h * speed * Time.deltaTime;
         position.z += v * speed * Time.deltaTime;
         tr.position = position;
+        tr.Rotate(Vector3.up * rotH * rotSpeed * Time.deltaTime);
+        tr.Rotate(Vector3.forward * rotV * rotSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,21 +48,23 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.tag == "BASE")
         {
             rBody.Sleep();
-            if (GameManager.instance.stage == 1) GameManager.instance.NextStage();
+            for (int i = 0; i < GameManager.instance.objPool.Count; i++)
+            {
+                if (GameManager.instance.objPool[i].activeInHierarchy) return;
+            }
+            GameManager.instance.NextStage();
+            GameManager.instance.isShoot = false;
         }
     }
     void Shoot()
-    {        
-        if (Physics.Raycast(ray, out hit, 1 << 8))
-        {
-            GameManager.instance.currPoint = hit.point;
-            rBody.AddForce(hit.point.normalized * 1000f);
-            currPos = tr.position;
-            line.enabled = false;
-            StartCoroutine(ShootingBall());
-            line.enabled = true;
-        }
-        
+    {
+        GameManager.instance.isShoot = true;
+        arrow.SetActive(false);
+        rBody.velocity = tr.right * 10f;
+        GameManager.instance.currPoint = tr.right;
+        currPos = tr.position;
+        StartCoroutine(ShootingBall());
+
     }
 
     IEnumerator ShootingBall()

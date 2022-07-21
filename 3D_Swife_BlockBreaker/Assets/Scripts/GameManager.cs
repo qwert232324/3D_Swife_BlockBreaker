@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Floor[] floors = new Floor[9];
     public int stage = 1;
     public Vector3 currPoint;
+    public bool isShoot = false;
     private int idx = 0;
 
     public GameObject ballPrefab;
