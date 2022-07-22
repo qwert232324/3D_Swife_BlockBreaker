@@ -39,6 +39,10 @@ public class Ball : MonoBehaviour
         position.x += h * speed * Time.deltaTime;
         position.z += v * speed * Time.deltaTime;
         tr.position = position;
+        //Quaternion rotation = tr.rotation;
+        //rotation.y += rotH * Time.deltaTime;
+        //rotation.z += rotV * Time.deltaTime;
+        //tr.rotation = rotation;
         tr.Rotate(Vector3.up * rotH * rotSpeed * Time.deltaTime);
         tr.Rotate(Vector3.forward * rotV * rotSpeed * Time.deltaTime);
     }
@@ -64,7 +68,6 @@ public class Ball : MonoBehaviour
         GameManager.instance.currPoint = tr.right;
         currPos = tr.position;
         StartCoroutine(ShootingBall());
-
     }
 
     IEnumerator ShootingBall()
@@ -74,8 +77,13 @@ public class Ball : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             GameObject obj = GameManager.instance.GetBall();
             obj.transform.position = currPos;
-            obj.SetActive(true);            
+            obj.SetActive(true);
         }        
     }
-
+    public void Reset()
+    {
+        rBody.Sleep();
+        tr.position = new Vector3(-2.22f, -1.77f, -2.22f);
+        StopAllCoroutines();
+    }
 }
