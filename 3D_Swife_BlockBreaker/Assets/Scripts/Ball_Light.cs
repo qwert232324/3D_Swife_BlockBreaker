@@ -27,6 +27,7 @@ public class Ball_Light : MonoBehaviour
             {
                 if (GameManager.instance.objPool[i].activeInHierarchy) return;
             }
+            if (!GameManager.instance.isBased) return;
             GameManager.instance.NextStage();
             GameManager.instance.isShoot = false;
         }

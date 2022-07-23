@@ -38,12 +38,9 @@ public class Ball : MonoBehaviour
         Vector3 position = tr.position;
         position.x += h * speed * Time.deltaTime;
         position.z += v * speed * Time.deltaTime;
+
         tr.position = position;
-        //Quaternion rotation = tr.rotation;
-        //rotation.y += rotH * Time.deltaTime;
-        //rotation.z += rotV * Time.deltaTime;
-        //tr.rotation = rotation;
-        tr.Rotate(Vector3.up * rotH * rotSpeed * Time.deltaTime);
+        tr.Rotate(Vector3.up * rotH * rotSpeed * Time.deltaTime, Space.World);
         tr.Rotate(Vector3.forward * rotV * rotSpeed * Time.deltaTime);
     }
 
@@ -51,6 +48,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.tag == "BASE")
         {
+            GameManager.instance.isBased = true;
             rBody.Sleep();
             for (int i = 0; i < GameManager.instance.objPool.Count; i++)
             {
@@ -63,6 +61,7 @@ public class Ball : MonoBehaviour
     void Shoot()
     {
         GameManager.instance.isShoot = true;
+        GameManager.instance.isBased = false;
         arrow.SetActive(false);
         rBody.velocity = tr.right * 10f;
         GameManager.instance.currPoint = tr.right;
