@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class Floor
@@ -22,6 +23,12 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
     private bool isX2 = false;
     private bool isMuted = false;
+    public AudioListener mainListener;
+    public AudioSource audioSource;
+    public AudioSource BGM;
+    public AudioClip shootSound;
+    public AudioClip breakSound;
+    public AudioClip clickSound;
 
     public static GameManager instance;
     public Floor[] floors = new Floor[9];
@@ -42,8 +49,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        BGM = Camera.main.GetComponent<AudioSource>();
         if (instance == null) instance = this;
-
+        audioSource = GetComponent<AudioSource>();
         GameObject ballPool = new GameObject("Ball Pool");
 
         for (int i = 0; i < 100; i++)
@@ -58,11 +66,15 @@ public class GameManager : MonoBehaviour
         {
             bestScore = PlayerPrefs.GetInt("Score");
         }
+
     }
 
     void Start()
-    {       
-        for(int i = 0; i < floors[0].blocks.Length; i++)
+    {
+        shootSound = Resources.Load<AudioClip>("ShootSound");
+        breakSound = Resources.Load<AudioClip>("BreakSound");
+        clickSound = Resources.Load<AudioClip>("ClickSound");
+        for (int i = 0; i < floors[0].blocks.Length; i++)
         {
             floors[0].blocks[i].gameObject.SetActive(Random.value > 0.7f);
         }
@@ -119,17 +131,23 @@ public class GameManager : MonoBehaviour
         panelPause.SetActive(isPaused ? true : false);
         Time.timeScale = isPaused ? 0.0f : (isX2 ? 2.0f : 1.0f);
         pauseImg.sprite = isPaused ? img[0] : img[1];
+        audioSource.PlayOneShot(clickSound);
+        
     }
     public void OnMuteClicked()
     {
         isMuted = !isMuted;
         soundImg.enabled = isMuted ? true : false;
+        audioSource.mute = isMuted ? true : false;
+        BGM.mute = isMuted ? true : false;
+        audioSource.PlayOneShot(clickSound);
     }
     public void OnTimeClicked()
     {
         isX2 = !isX2;
         Time.timeScale = isX2 ? 2.0f : 1.0f;
         timeTxt.text = isX2 ? "X1" : "X2";
+        audioSource.PlayOneShot(clickSound);
     }
     public void OnResetClicked()
     {
@@ -140,6 +158,7 @@ public class GameManager : MonoBehaviour
             objPool[i].SetActive(false);
         }
         NextStage();
+        audioSource.PlayOneShot(clickSound);
     }
     public void OnRestartClicked()
     {
@@ -156,6 +175,10 @@ public class GameManager : MonoBehaviour
         OnResetClicked();
     }
 
+    public void OnExitClicked()
+    {
+        SceneManager.LoadScene("Title");
+    }
     void GameOver()
     {
         PlayerPrefs.SetInt("Score", bestScore);

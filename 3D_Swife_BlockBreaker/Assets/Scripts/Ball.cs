@@ -33,15 +33,19 @@ public class Ball : MonoBehaviour
 
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
-        rotH = Input.GetAxis("RotLR");
-        rotV = Input.GetAxis("RotUD");
         Vector3 position = tr.position;
         position.x += h * speed * Time.deltaTime;
         position.z += v * speed * Time.deltaTime;
-
         tr.position = position;
+
+        rotH = Input.GetAxis("RotLR");
+        rotV = Input.GetAxis("RotUD");
+
         tr.Rotate(Vector3.up * rotH * rotSpeed * Time.deltaTime, Space.World);
         tr.Rotate(Vector3.forward * rotV * rotSpeed * Time.deltaTime);
+        Vector3 currRot = tr.rotation.eulerAngles;
+        currRot.z = Mathf.Clamp(currRot.z, 10.0f, 90.0f);
+        tr.rotation = Quaternion.Euler(currRot);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -66,7 +70,9 @@ public class Ball : MonoBehaviour
         rBody.velocity = tr.right * 10f;
         GameManager.instance.currPoint = tr.right;
         currPos = tr.position;
+        GameManager.instance.audioSource.PlayOneShot(GameManager.instance.shootSound);
         StartCoroutine(ShootingBall());
+        
     }
 
     IEnumerator ShootingBall()

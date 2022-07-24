@@ -34,11 +34,13 @@ public class Block : MonoBehaviour
                 return;
             }
             mesh.material = colors[(hitCount - 1) % 9];
+            GameManager.instance.audioSource.PlayOneShot(GameManager.instance.shootSound);
         }
     }
     private void Break()
     {
         this.gameObject.SetActive(false);
+        GameManager.instance.audioSource.PlayOneShot(GameManager.instance.breakSound);
     }
 
 }

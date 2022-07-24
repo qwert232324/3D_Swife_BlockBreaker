@@ -12,6 +12,7 @@ public class Ball_Light : MonoBehaviour
     private void OnEnable()
     {
         rBody.velocity = GameManager.instance.currPoint * 10f;
+        GameManager.instance.audioSource.PlayOneShot(GameManager.instance.shootSound);
     }
     private void OnDisable()
     {        
