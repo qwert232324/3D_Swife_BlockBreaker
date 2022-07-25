@@ -18,12 +18,6 @@ public class Block : MonoBehaviour
         mesh.material = colors[(hitCount - 1) % 9];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "BALL")

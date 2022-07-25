@@ -14,17 +14,20 @@ public class Ball : MonoBehaviour
     private float rotV;
     public float speed = 3.0f;
     public float rotSpeed = 100f;
+    public LineRenderer line;
+    public Transform laserPos;
     void Start()
     {
         arrow = this.gameObject.transform.GetChild(0).gameObject;
         rBody = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
+        line = GetComponent<LineRenderer>();
+        laserPos = transform.GetChild(0).GetComponent<Transform>();
+        line.material.SetColor("_Color", Color.red);
     }
     void Update()
     {
         if (GameManager.instance.isShoot) return;
-
-        arrow.SetActive(true);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -46,6 +49,17 @@ public class Ball : MonoBehaviour
         Vector3 currRot = tr.rotation.eulerAngles;
         currRot.z = Mathf.Clamp(currRot.z, 10.0f, 90.0f);
         tr.rotation = Quaternion.Euler(currRot);
+
+
+        
+        RaycastHit hit;
+
+        line.SetPosition(0, laserPos.position);
+        if (Physics.Raycast(laserPos.position, laserPos.right, out hit, 5000f))
+        {
+            line.SetPosition(1, hit.point);
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -67,6 +81,7 @@ public class Ball : MonoBehaviour
         GameManager.instance.isShoot = true;
         GameManager.instance.isBased = false;
         arrow.SetActive(false);
+        line.enabled = false;
         rBody.velocity = tr.right * 10f;
         GameManager.instance.currPoint = tr.right;
         currPos = tr.position;
@@ -83,7 +98,7 @@ public class Ball : MonoBehaviour
             GameObject obj = GameManager.instance.GetBall();
             obj.transform.position = currPos;
             obj.SetActive(true);
-        }        
+        }
     }
     public void Reset()
     {

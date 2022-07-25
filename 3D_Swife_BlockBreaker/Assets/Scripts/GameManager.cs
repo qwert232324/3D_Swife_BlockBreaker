@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     public GameObject panelPause;
     public GameObject panelResult;
 
+    public Ball mainBall;
+
     void Awake()
     {
         BGM = Camera.main.GetComponent<AudioSource>();
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour
     }
     public void NextStage()
     {
+
         for(int i = 0; i < floors.Length; i++)
         {
             if (floors[i].floorPos.position.y < 0.1f)
@@ -123,6 +126,8 @@ public class GameManager : MonoBehaviour
         score.text = "SCORE : " + stage;
         if (bestScore < stage) bestScore = stage;
         best.text = "BEST : " + bestScore;
+
+        mainBall.line.enabled = true;
     }
 
     public void OnPauseClicked()
@@ -132,7 +137,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = isPaused ? 0.0f : (isX2 ? 2.0f : 1.0f);
         pauseImg.sprite = isPaused ? img[0] : img[1];
         audioSource.PlayOneShot(clickSound);
-        
     }
     public void OnMuteClicked()
     {
@@ -177,6 +181,7 @@ public class GameManager : MonoBehaviour
 
     public void OnExitClicked()
     {
+        OnPauseClicked();
         SceneManager.LoadScene("Title");
     }
     void GameOver()
