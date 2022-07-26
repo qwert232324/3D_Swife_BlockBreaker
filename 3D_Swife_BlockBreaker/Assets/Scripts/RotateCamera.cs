@@ -4,36 +4,34 @@ using UnityEngine;
 
 public class RotateCamera : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject target = null;       // 타겟이 될 게임오브젝트
-    private Vector3 point = Vector3.zero;   // 타겟의 위치(바라볼 위치)
+    public GameObject target; // 쳐다보게 될 GameObject
+    private Vector3 point; // 타겟의 위치
 
-    private float rotationX = 0.0f;         // X축 회전값
-    private float rotationY = 0.0f;         // Y축 회전값
-    private float speed = 100.0f;           // 회전속도
+    private float x = 0.0f; // 마우스 입력값_X
+    private float y = 0.0f; // 마우스 입력값_Y
+    private float rotSpeed = 100.0f; // 회전 속도
 
 
     void Start()
     {
-        // 바라볼 위치 얻기
+        // target 객체의 위치 얻기
         point = target.transform.position;
     }
 
     void Update()
     {
-        // 마우스가 눌러지면,
+        // 우클릭 하고있는 상태에서 움직일 것
         if (Input.GetMouseButton(1))
         {
-            // 마우스 변화량을 얻고, 그 값에 델타타임과 속도를 곱해서 회전값 구하기
-            rotationX = Input.GetAxis("Mouse X") * Time.deltaTime * speed;
-            rotationY = Input.GetAxis("Mouse Y") * Time.deltaTime * speed;
+            // 사용자에게 마우스 값 입력받음
+            x = Input.GetAxis("Mouse X") * Time.deltaTime * rotSpeed;
+            y = Input.GetAxis("Mouse Y") * Time.deltaTime * rotSpeed;
 
             // 각 축으로 회전
-            // Y축은 마우스를 내릴때 카메라는 올라가야 하므로 반대로 적용
-            transform.RotateAround(point, Vector3.right, -rotationY);
-            transform.RotateAround(point, Vector3.up, rotationX);
+            transform.RotateAround(point, Vector3.right, -y);
+            transform.RotateAround(point, Vector3.up, x);
 
-            // 회전후 타겟 바라보기
+            // target 쳐다보기
             transform.LookAt(point);
         }
     }

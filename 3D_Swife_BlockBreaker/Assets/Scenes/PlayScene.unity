@@ -5296,6 +5296,7 @@ GameObject:
   - component: {fileID: 439133641}
   - component: {fileID: 439133640}
   - component: {fileID: 439133642}
+  - component: {fileID: 439133643}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5335,12 +5336,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 75c6c57e72a33de42bcf6efefad9c957, type: 3}
   soundImg: {fileID: 585528277}
   timeTxt: {fileID: 1543714242}
-  mainListener: {fileID: 963194226}
-  audioSource: {fileID: 0}
-  BGM: {fileID: 0}
-  shootSound: {fileID: 0}
-  breakSound: {fileID: 0}
-  clickSound: {fileID: 0}
   floors:
   - floorPos: {fileID: 932099302}
     blocks:
@@ -5587,8 +5582,7 @@ MonoBehaviour:
     - {fileID: 1967362195}
   stage: 1
   currPoint: {x: 0, y: 0, z: 0}
-  isShoot: 0
-  isBased: 1
+  currPos: {x: 0, y: 0, z: 0}
   ballPrefab: {fileID: 9015132231679316757, guid: 8ab9bf8a438ca2340b2e8bac06b8c28c,
     type: 3}
   objPool: []
@@ -5708,6 +5702,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &439133643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439133639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb7ccf92d61e564f82ddd977fea5b5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip:
+  - {fileID: 8300000, guid: 70e02441ad3cd8f488092b6a4933e446, type: 3}
+  - {fileID: 8300000, guid: 05b517e735c2cec4abd77c440b4c76ad, type: 3}
+  - {fileID: 8300000, guid: 99348d26b121bdf40bca2ff30b000207, type: 3}
 --- !u!1 &439504718 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3494897048547381961, guid: f33da8f536e50cd4a9d8cabbb14567cc,
@@ -19179,6 +19189,11 @@ PrefabInstance:
       propertyPath: laser
       value: 
       objectReference: {fileID: 71931788}
+    - target: {fileID: 7002834485830101415, guid: 620ccd3556697d34ab0b48ceee0b625d,
+        type: 3}
+      propertyPath: m_Name
+      value: LaserPos
+      objectReference: {fileID: 0}
     - target: {fileID: 9015132231679316757, guid: 620ccd3556697d34ab0b48ceee0b625d,
         type: 3}
       propertyPath: m_Name
